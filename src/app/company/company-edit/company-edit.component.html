@@ -1,0 +1,9 @@
+whatt?
+<div class="container-fluid" *ngIf="selectedCompany$ | async; let company">
+  <div class="row">
+    <div class="col-xs-6">Name</div>
+    <div class="col-xs-6">
+      {{ company?.name }}
+    </div>
+  </div>
+</div>
