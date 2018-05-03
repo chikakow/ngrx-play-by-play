@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
@@ -9,14 +9,18 @@ import { Company } from '../../models/company';
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
-  styleUrls: ['./company-list.component.css']
+  styleUrls: ['./company-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompanyListComponent implements OnInit {
 
   companies$: Observable<Company[]>;
+  selectedCompany$: Observable<Company>;
+  selectedCompany: Company;
   
   constructor(private store: Store<AppState>) { 
     this.companies$ = this.store.select(state => state.companies);
+    this.selectedCompany$ = this.store.select(state => state.selectedCompany);
   }
   
   ngOnInit() {
@@ -27,12 +31,16 @@ export class CompanyListComponent implements OnInit {
     this.store.dispatch(new companyActions.LoadCompaniesAction())
   }
 
-  deleteCompanies(companyId: number) {
+  deleteCompany(companyId: number) {
     this.store.dispatch(new companyActions.DeleteCompanyAction(companyId))
   }
 
-  checkCompany(company) {
-    console.log('company', company);
+  selectCompany(company) {
     this.store.dispatch(new companyActions.SelectCompanyAction(company))
+  }
+
+  selectedCompanyChange(company: Company) {
+    console.log('company', company);
+    this.selectedCompany = company;
   }
 }

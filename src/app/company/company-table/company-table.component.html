@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Established</th>
+        <th scope="col">Phone</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tr *ngFor="let company of companies">
+      <th>
+        <input type="radio" name="companyradio" (change)="selectCompanyClick(company)" />
+      </th>
+      <th scope="row">{{company.id}}</th>
+      <td>{{company.name}}</td>
+      <td>{{company.established}}</td>
+      <td>{{company.phone }}..</td>
+      <td (click)="deleteCompanyClick(company.id)">X</td>
+    </tr>
+    </tbody>
+  </table>
